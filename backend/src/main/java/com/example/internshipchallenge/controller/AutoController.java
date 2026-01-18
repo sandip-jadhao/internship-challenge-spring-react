@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import com.example.internshipchallenge.service.UserService;
-import com.example.internshipchallenge.model.User;
+import com.example.internshipchallenge.model.Users;
 
 @RestController
 @RequestMapping("/api/auto")
@@ -19,8 +19,8 @@ public class AutoController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
+    public ResponseEntity<Users> registerUser(@RequestBody Users users) {
+        Users registeredUser = userService.registerUser(users);
         return ResponseEntity.ok(registeredUser);
     }
 }
