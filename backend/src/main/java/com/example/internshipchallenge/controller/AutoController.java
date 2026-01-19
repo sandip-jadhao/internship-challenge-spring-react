@@ -1,23 +1,23 @@
 package com.example.internshipchallenge.controller;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.http.ResponseEntity;
-import com.example.internshipchallenge.service.UserService;
-import com.example.internshipchallenge.model.Users;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.internshipchallenge.dto.LoginRequest;
+import com.example.internshipchallenge.dto.LoginResponse;
+import com.example.internshipchallenge.model.Users;
+import com.example.internshipchallenge.service.UserService;
 
-
-
-import java.util.Optional;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/auto")
-@CrossOrigin(origins = "http://localhost:3000/")
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AutoController {
 
     @Autowired
@@ -30,15 +30,10 @@ public class AutoController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
-        Optional<Users> user = userService.findByUsername(loginRequest.getUsername());
-        if (user.isPresent() && userService.checkPassword(loginRequest.getPassword(), user.get().getPassword())) {
-            String token = userService.generateToken(user.get());
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
-        }
-        return ResponseEntity.status(401).body("Invalid username or password");
-
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        System.out.println("Login attempt for user: " + request.getUsername());
+        
+        String token = userService.login(request.getUsername(), request.getPassword());
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }
