@@ -15,7 +15,10 @@ function Register() {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container-fluid  vh-100"
+        style={{
+        background: "linear-gradient(180deg, #0f2027, #203a43, #2c5364)",
+        }}>
             <div className="row justify-content-center">
                 <div className="col-md-5">
                     <div className="card shadow-lg p-4">
