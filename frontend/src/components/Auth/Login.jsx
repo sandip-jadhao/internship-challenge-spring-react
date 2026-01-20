@@ -17,7 +17,7 @@ function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
+      navigate("/UserDashboard");
     } catch (error) {
       alert("Invalid username or password");
     }
