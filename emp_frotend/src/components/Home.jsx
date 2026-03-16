@@ -7,16 +7,24 @@ function Home() {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (loginId === "admin" && password === "admin") {
-      setIsLoggedIn(true);
-      setError("");
+      setMessage("Login Successful...");
+      setAlertType("success");
+
+      setTimeout(() => {
+        setMessage("");
+        setIsLoggedIn(true);
+      }, 2000);
+      
     } else {
-      setError("Invalid login credentials");
+      setMessage("Invalid login credentials");
+      setAlertType("danger");
     }
   };
 
@@ -38,7 +46,7 @@ function Home() {
 
         <h2 className="login-title">Admin Login</h2>
 
-        {error && <p className="login-error">{error}</p>}
+        {message && <p className={`alert alert-${alertType}`}>{message}</p>}
 
         <input
           type="text"
@@ -59,9 +67,7 @@ function Home() {
         <button type="submit" className="login-btn">
           Login
         </button>
-
       </form>
-
     </div>
   );
 }
